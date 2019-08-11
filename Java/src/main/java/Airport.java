@@ -1,4 +1,4 @@
-import Planes.experimentalPlane;
+import Planes.ExperimentalPlane;
 import models.MilitaryType;
 import Planes.MilitaryPlane;
 import Planes.PassengerPlane;
@@ -13,25 +13,31 @@ import java.util.*;
 public class Airport {
     private List<? extends Plane> planes;
 
-
+    /** названия переменных должны бвть понятными. x и l - не несет смысловой нагрузки
+     данные переменные можно назвать так l->plainList  x->passengerPlainList или по другому на усмотрение разработчика
+     */
 
     public List<PassengerPlane> getPasPl() {
-        List<? extends Plane> l = this.planes;
-        List<PassengerPlane> x = new ArrayList<>();
-        for (Plane p : l) {if (p instanceof PassengerPlane) {x.add((PassengerPlane) p);}}
-        return x;
+        List<? extends Plane> plainList = this.planes;
+        List<PassengerPlane> passengerPlainList = new ArrayList<>();
+        for (Plane p : plainList) {if (p instanceof PassengerPlane) {passengerPlainList.add((PassengerPlane) p);}}
+        return passengerPlainList;
     }
+
+    /**
+     не стоит делать коментариев когда закончился If else
+     */
 
     public List<MilitaryPlane> getMilitaryPlanes() {
         List<MilitaryPlane> militaryPlanes = new ArrayList<>();
         for (Plane plane : planes) {
             if (plane instanceof MilitaryPlane) {
                 militaryPlanes.add((MilitaryPlane) plane);
-            } //if
+            }
             else {
 
-            } // else
-        } //for
+            }
+        }
         return militaryPlanes;
     }
 
@@ -77,20 +83,20 @@ public class Airport {
 
     }
 
-    public List<experimentalPlane> getExperimentalPlanes() {
-        List<experimentalPlane> experimentalPlanes = new ArrayList<>();
+    public List<ExperimentalPlane> getExperimentalPlanes() {
+        List<ExperimentalPlane> ExperimentalPlanes = new ArrayList<>();
         for (Plane plane : planes) {
-            if (plane instanceof experimentalPlane) {
-                experimentalPlanes.add((experimentalPlane) plane);
+            if (plane instanceof ExperimentalPlane) {
+                ExperimentalPlanes.add((ExperimentalPlane) plane);
             }
         }
-        return experimentalPlanes;
+        return ExperimentalPlanes;
     }
 
     public Airport sortByMaxDistance() {
         Collections.sort(planes, new Comparator<Plane>() {
             public int compare(Plane o1, Plane o2) {
-                return o1.Get_Max_Flight_Distance() - o2.Get_Max_Flight_Distance();
+                return o1.getMaxFlightDistance() - o2.getMaxFlightDistance();
             }
         });
         return this;
@@ -123,7 +129,12 @@ public class Airport {
         return planes;
     }
 
-    private void print(Collection<? extends Plane> collection) {
+
+    /**
+     * printAllPlains - плохое название для метода, что значит printAllPlains? можно использовать printAllPlains например
+     *
+     */
+    private void printAllPlains(Collection<? extends Plane> collection) {
         Iterator<? extends Plane> iterator = collection.iterator();
         while (iterator.hasNext()) {
             Plane plane = iterator.next();

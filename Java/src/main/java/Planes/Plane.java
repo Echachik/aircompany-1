@@ -23,7 +23,11 @@ abstract public class Plane {
         return maxSpeed;
     }
 
-    public int Get_Max_Flight_Distance() {
+    /**
+     * я думаю лучше придеживаться одного стиля кода getMaxFlightDistance->GetMaxFlightDistance
+     */
+
+    public int getMaxFlightDistance() {
         return maxFlightDistance;
     }
 
