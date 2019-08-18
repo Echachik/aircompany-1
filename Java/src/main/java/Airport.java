@@ -13,19 +13,24 @@ import java.util.*;
 public class Airport {
     private List<? extends Plane> planes;
 
-    /** названия переменных должны бвть понятными. x и l - не несет смысловой нагрузки
-     данные переменные можно назвать так l->plainList  x->passengerPlainList или по другому на усмотрение разработчика
+    /**
+     * названия переменных должны быть понятными. x и l - не несет смысловой нагрузки
+     * данные переменные можно назвать так l->planeList  x->passengerPlaneList или по другому на усмотрение разработчика
      */
 
-    public List<PassengerPlane> getPasPl() {
-        List<? extends Plane> plainList = this.planes;
-        List<PassengerPlane> passengerPlainList = new ArrayList<>();
-        for (Plane p : plainList) {if (p instanceof PassengerPlane) {passengerPlainList.add((PassengerPlane) p);}}
-        return passengerPlainList;
+    public List<PassengerPlane> getPassengerPlanes() {
+        List<? extends Plane> planeList = this.planes;
+        List<PassengerPlane> passengerPlaneList = new ArrayList<>();
+        for (Plane p : planeList) {
+            if (p instanceof PassengerPlane) {
+                passengerPlaneList.add((PassengerPlane) p);
+            }
+        }
+        return passengerPlaneList;
     }
 
     /**
-     не стоит делать коментариев когда закончился If else
+     * не стоит делать коментариев когда закончился If else
      */
 
     public List<MilitaryPlane> getMilitaryPlanes() {
@@ -33,8 +38,7 @@ public class Airport {
         for (Plane plane : planes) {
             if (plane instanceof MilitaryPlane) {
                 militaryPlanes.add((MilitaryPlane) plane);
-            }
-            else {
+            } else {
 
             }
         }
@@ -42,7 +46,7 @@ public class Airport {
     }
 
     public PassengerPlane getPassengerPlaneWithMaxPassengersCapacity() {
-        List<PassengerPlane> passengerPlanes = getPasPl();
+        List<PassengerPlane> passengerPlanes = getPassengerPlanes();
         PassengerPlane planeWithMaxCapacity = passengerPlanes.get(0);
         for (int i = 0; i < passengerPlanes.size(); i++) {
             if (passengerPlanes.get(i).getPassengersCapacity() > planeWithMaxCapacity.getPassengersCapacity()) {
@@ -51,23 +55,19 @@ public class Airport {
         }
 
 
-
-
-
-
         return planeWithMaxCapacity;
     }
 
     public List<MilitaryPlane> getTransportMilitaryPlanes() {
-    List<MilitaryPlane> transportMilitaryPlanes = new ArrayList<>();
-    List<MilitaryPlane> militaryPlanes = getMilitaryPlanes();
-    for (int i = 0; i < militaryPlanes.size(); i++) {
-    MilitaryPlane plane = militaryPlanes.get(i);
-    if (plane.getType() == MilitaryType.TRANSPORT) {
-    transportMilitaryPlanes.add(plane);
-    }
-    }
-    return transportMilitaryPlanes;
+        List<MilitaryPlane> transportMilitaryPlanes = new ArrayList<>();
+        List<MilitaryPlane> militaryPlanes = getMilitaryPlanes();
+        for (int i = 0; i < militaryPlanes.size(); i++) {
+            MilitaryPlane plane = militaryPlanes.get(i);
+            if (plane.getType() == MilitaryType.TRANSPORT) {
+                transportMilitaryPlanes.add(plane);
+            }
+        }
+        return transportMilitaryPlanes;
     }
 
     public List<MilitaryPlane> getBomberMilitaryPlanes() {
@@ -94,23 +94,21 @@ public class Airport {
     }
 
     public Airport sortByMaxDistance() {
-        Collections.sort(planes, new Comparator<Plane>() {
-            public int compare(Plane o1, Plane o2) {
-                return o1.getMaxFlightDistance() - o2.getMaxFlightDistance();
-            }
-        });
+        Collections.sort(planes, Comparator.comparing(Plane::getMaxFlightDistance));
+
         return this;
     }
 
 
     /**
      * Sorts by max speed
+     *
      * @return Airport
      */
     public Airport sortByMaxSpeed() {
         Collections.sort(planes, new Comparator<Plane>() {
             public int compare(Plane o1, Plane o2) {
-                return o1.getMS() - o2.getMS();
+                return o1.getMaxSpeed() - o2.getMaxSpeed();
             }
         });
         return this;
@@ -131,15 +129,10 @@ public class Airport {
 
 
     /**
-     * printAllPlains - плохое название для метода, что значит printAllPlains? можно использовать printAllPlains например
-     *
+     * printAllPlanes - плохое название для метода, что значит printAllPlanes? можно использовать printAllPlanes например
      */
-    private void printAllPlains(Collection<? extends Plane> collection) {
-        Iterator<? extends Plane> iterator = collection.iterator();
-        while (iterator.hasNext()) {
-            Plane plane = iterator.next();
-            System.out.println(plane);
-        }
+    private void printAllPlanes(Collection<? extends Plane> collection) {
+        collection.forEach(System.out::println);
     }
 
     @Override
